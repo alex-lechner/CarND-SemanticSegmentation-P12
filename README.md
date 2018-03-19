@@ -5,15 +5,15 @@
 **Semantic Segmentation Project**
 
 The goals / steps of this project are the following:
+
 * The ``load_vgg``, ``layers``, ``optimize`` & ``train_nn`` functions are implemented correctly
 * The model decreases loss over time
 * Number of epoch and batch size are set to a reasonable number
 * Most of the images must be labeled correctly (80% of the road and no more than 20% of non-road pixels as the road) 
 * Summarize the results with a written report
 
-
-[//]: References
-[python-3]: https://www.python.org/
+[//]: # (References)
+[python3]: https://www.python.org/
 [tensorflow]: https://www.tensorflow.org/
 [numpy]: http://www.numpy.org/
 [scipy]: https://www.scipy.org/
@@ -23,13 +23,14 @@ The goals / steps of this project are the following:
 [img2]: ./imgs/umm_000015.png "Kitti Road Test Image 2"
 [img3]: ./imgs/uu_000025.png "Kitti Road Test Image 3"
 [img4]: ./imgs/umm_000082.png "Kitti Road Test Image 4"
+
 ---
 
 ## Setup
 
 ### Frameworks and Packages
 Make sure you have the following installed:
- - [Python 3][python-3]
+ - [Python 3][python3]
  - [TensorFlow][tensorflow]
  - [NumPy][numpy]
  - [SciPy][scipy]
