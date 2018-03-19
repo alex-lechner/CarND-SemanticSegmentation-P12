@@ -13,7 +13,6 @@ The goals / steps of this project are the following:
 
 
 [//]: # (References)
-
 [python-3]: https://www.python.org/
 [tensorflow]: https://www.tensorflow.org/
 [numpy]: http://www.numpy.org/
