@@ -61,22 +61,22 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     """
     # TODO: Implement function
     conv7_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, padding='same',
-                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.02))
     conv4_1x1 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same',
-                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.02))
     conv3_1x1 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same',
-                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+                                 kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.02))
 
     output = tf.layers.conv2d_transpose(conv7_1x1, num_classes, 4, strides=(2, 2), padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(
-        1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.012))
-    output = tf.add(output, conv4_1x1)
+        1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.02))
+    skip_layer4 = tf.add(output, conv4_1x1)
 
-    output = tf.layers.conv2d_transpose(output, num_classes, 4, strides=(2, 2), padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(
-        1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.012))
-    output = tf.add(output, conv3_1x1)
+    output = tf.layers.conv2d_transpose(skip_layer4, num_classes, 4, strides=(2, 2), padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(
+        1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.02))
+    skip_layer3 = tf.add(output, conv3_1x1)
 
-    output = tf.layers.conv2d_transpose(output, num_classes, 16, strides=(8, 8), padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(
-        1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.012))
+    output = tf.layers.conv2d_transpose(skip_layer3, num_classes, 16, strides=(8, 8), padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(
+        1e-3), kernel_initializer=tf.random_normal_initializer(stddev=0.02))
 
     return output
 
@@ -98,7 +98,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
     labels = tf.reshape(correct_label, (-1, num_classes))
 
     cross_entropy_loss = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits_v2(logits=logits, labels=labels))
+        tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=labels))
     train_op = tf.train.AdamOptimizer(
         learning_rate).minimize(cross_entropy_loss)
 
@@ -125,13 +125,13 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     """
     # TODO: Implement function
     for epoch in range(epochs):
-        print("Epoch: {}".format(epoch))
-        batch = 0
+        print("Epoch: {}".format(epoch+1))
+        batch = 1
         for image, label in get_batches_fn(batch_size):
             # Train
             start = time.time()
             _, loss = sess.run([train_op, cross_entropy_loss], feed_dict={
-                               input_image: image, correct_label: label, keep_prob: 0.8, learning_rate: 1e-4})
+                               input_image: image, correct_label: label, keep_prob: 0.55, learning_rate: 1e-4})
             end = time.time()
             print('Batch number: {}'.format(batch))
             print('Training loss: {:.3f}'.format(loss))
@@ -183,8 +183,8 @@ def run():
         # saver = tf.train.Saver()
 
         # TODO: Train NN using the train_nn function
-        epochs = 10
-        batch_size = 4
+        epochs = 20
+        batch_size = 18
 
         sess.run(tf.global_variables_initializer())
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op,
