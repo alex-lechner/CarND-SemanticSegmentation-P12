@@ -14,11 +14,11 @@ The goals / steps of this project are the following:
 
 [//]: # (References)
 
-[python-3]: https://www.python.org/ "Python 3"
-[tensorflow]: https://www.tensorflow.org/ "TensorFlow"
-[numpy]: http://www.numpy.org/ "NumPy"
-[scipy]: https://www.scipy.org/ "SciPy"
-[kitti-download]: http://www.cvlibs.net/download.php?file=data_road.zip "Kitti Road dataset"
+[python-3]: https://www.python.org/
+[tensorflow]: https://www.tensorflow.org/
+[numpy]: http://www.numpy.org/
+[scipy]: https://www.scipy.org/
+[kitti-download]: http://www.cvlibs.net/download.php?file=data_road.zip
 [starter-code]: https://github.com/udacity/CarND-Semantic-Segmentation
 [img1]: ./imgs/um_000034.png "Kitti Road Test Image 1"
 [img2]: ./imgs/umm_000015.png "Kitti Road Test Image 2"
